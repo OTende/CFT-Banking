@@ -10,7 +10,7 @@ import com.example.cftbin.model.UserRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class UserViewModel(val userRepository: UserRepository) : ViewModel() {
+class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
@@ -21,11 +21,9 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    companion object {
-        class Factory(private val repository: UserRepository) : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return UserViewModel(repository) as T
-            }
+    class Factory(private val repository: UserRepository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return UserViewModel(repository) as T
         }
     }
 }

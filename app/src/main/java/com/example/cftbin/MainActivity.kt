@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val viewModel = UserViewModel(UserRepository())
         viewModel.getUser(46717121)
         viewModel.user.observe(this) {
-            findViewById<TextView>(R.id.text_view).text = it.brand
+//            findViewById<TextView>(R.id.text_view).text = it.brand
         }
         setContentView(R.layout.activity_main)
     }
