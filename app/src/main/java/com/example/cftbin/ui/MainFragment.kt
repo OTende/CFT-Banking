@@ -1,24 +1,35 @@
 package com.example.cftbin.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import com.example.cftbin.R
 import com.example.cftbin.databinding.FragmentMainBinding
 import com.example.cftbin.model.UserRepository
+import com.example.cftbin.model.room.UserDatabase
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding
         get() = _binding!!
-    private val viewModel: UserViewModel by viewModels {
-        UserViewModel.Factory(UserRepository())
+
+    private val viewModel: UserViewModel by activityViewModels {
+        UserViewModel.Factory(
+            UserRepository(
+                UserDatabase.getDatabase(requireContext()).userDao()
+            )
+        )
     }
 
     override fun onCreateView(
@@ -26,13 +37,26 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(layoutInflater)
-        viewModel.user.observe(viewLifecycleOwner) {
-            binding.findBin.text = it.brand
-        }
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        if (viewModel.isOpen)
+            binding.myRoot.setTransition(R.id.button_end, R.id.button_end)
         binding.findBin.setOnClickListener {
-            val text = binding.binEditText.text.toString().toInt()
-            viewModel.getUser(text)
-            binding.root.transitionToEnd()
+            try {
+                val text = binding.binEditText.text.toString().toInt()
+                viewModel.getUser(text)
+                viewModel.user.observe(viewLifecycleOwner) { user ->
+                    if (user != null) {
+                        viewModel.isOpen = true
+                        binding.myRoot.transitionToEnd()
+                        binding.binInput.error = null
+                        viewModel.saveUser(user)
+                    } else
+                        binding.binInput.error = getString(R.string.no_user)
+                }
+            } catch (e: java.lang.NumberFormatException) {
+                binding.binInput.error = getString(R.string.enter_number)
+            }
         }
         return binding.root
     }
