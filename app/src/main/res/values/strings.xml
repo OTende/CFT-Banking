@@ -2,8 +2,6 @@
     <string name="app_name">CFT BIN</string>
     <string name="insert_bin">БИН</string>
     <string name="find">Найти</string>
-    <string name="no_internet">Отсутсвует подключение к интернету</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_user">Не удалось найти пользователя с данным БИН</string>
     <string name="enter_number">Введите подходящее число</string>
     <string name="scheme">Платёжная система</string>
@@ -14,6 +12,5 @@
     <string name="coordinates">Широта: %1$d, Долгота: %2$d</string>
     <string name="bank">Банк</string>
     <string name="bank_info">%1$s, г. %2$s</string>
-    <string name="copied">Успешно скопировано</string>
     <string name="history">История запросов</string>
 </resources>
