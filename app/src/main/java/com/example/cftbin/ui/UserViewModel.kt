@@ -3,28 +3,34 @@ package com.example.cftbin.ui
 import androidx.lifecycle.*
 import com.example.cftbin.model.User
 import com.example.cftbin.model.UserRepository
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
     var isOpen = false
-    val translated = hashMapOf<String, String>(
+    val translated = hashMapOf(
         "debit" to "Дебетовая",
         "credit" to "Кредитная",
         "true" to "Да",
         "false" to "Нет"
     )
 
-    var users = listOf<User>()
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>>
+        get() = _users
 
-    fun getUsers() {
+    init {
+        updateUsers()
+    }
+
+    fun updateUsers() {
         viewModelScope.launch {
-            users = userRepository.getUsers()
+            // Я не смог придумать варианта лучше
+            delay(500)
+            _users.value = userRepository.getUsers()
         }
     }
 
