@@ -1,11 +1,7 @@
 package com.example.cftbin.model
 
-import androidx.annotation.WorkerThread
-import androidx.room.RoomDatabase
 import com.example.cftbin.api.UserApi
 import com.example.cftbin.model.room.UserDAO
-import com.example.cftbin.model.room.UserDatabase
-import com.google.android.material.snackbar.Snackbar
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
