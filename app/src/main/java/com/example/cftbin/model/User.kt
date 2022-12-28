@@ -1,12 +1,18 @@
 package com.example.cftbin.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class User(
-    val number: Number,
+    @PrimaryKey(autoGenerate = true) val user_id: Int,
+    @Embedded val number: Number,
     val scheme: String?,
     val type: String?,
     val brand: String?,
     val prepaid: Boolean?,
-    val country: Country?,
-    val bank: Bank?
+    @Embedded val country: Country?,
+    @Embedded val bank: Bank?
 ) {
 }
