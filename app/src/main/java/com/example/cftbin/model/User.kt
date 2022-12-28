@@ -14,5 +14,4 @@ data class User(
     val prepaid: Boolean?,
     @Embedded val country: Country?,
     @Embedded val bank: Bank?
-) {
-}
+)
