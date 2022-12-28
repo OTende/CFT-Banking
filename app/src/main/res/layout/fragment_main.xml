@@ -1,48 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_main_scene"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/bin_input"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.cftbin.ui.UserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/my_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/insert_bin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layoutDescription="@xml/activity_main_scene"
+        tools:context=".MainActivity">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/bin_edit_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bin_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="8"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/insert_bin"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/asdf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="asdfg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/bin_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="8"
+                android:text="45717360" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/find_bin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/find"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bin_input"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <ScrollView
+            android:id="@+id/info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/find_bin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bin_input">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:orientation="vertical">
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <LinearLayout style="@style/CardView.Layout">
+
+                        <TextView
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/scheme" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.user.scheme}" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <LinearLayout style="@style/CardView.Layout">
+
+                        <TextView
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/brand" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.user.brand}" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <LinearLayout style="@style/CardView.Layout">
+
+                        <TextView
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/prepaid" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.translated[viewModel.user.prepaid.toString()]}" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <LinearLayout style="@style/CardView.Layout">
+
+                        <TextView
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/type" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.translated[viewModel.user.type]}" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/country_name"
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/country"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.user.country.emoji + viewModel.user.country.name}"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/country_name" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{viewModel.user.country.currency}"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{@string/coordinates(viewModel.user.country.latitude, viewModel.user.country.longitude)}"
+                            android:textSize="11sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView style="@style/Base.CardView.Main">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/bank_info"
+                            style="@style/TextAppearance.Header"
+                            android:text="@string/bank"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/phone_text_view"
+                            style="@style/TextAppearance.Medium"
+                            android:text="@{@string/bank_info(viewModel.user.bank.name, viewModel.user.bank.city)}"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bank_info" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:autoLink="web"
+                            android:text="@{viewModel.user.bank.url}"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            style="@style/TextAppearance.Medium"
+                            android:autoLink="phone"
+                            android:text="@{viewModel.user.bank.phone}"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/find_bin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/info_layout"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>
